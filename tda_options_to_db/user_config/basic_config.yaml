@@ -1,0 +1,7 @@
+threading:
+  maxProducerThreads: 10
+  maxConsumerThreads: 10
+
+pauseTimeBetweenRuns:
+#In seconds
+  sleepTime: 60

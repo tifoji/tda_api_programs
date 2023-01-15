@@ -1,0 +1,9 @@
+# Follow format to add more tickers
+ticker_list:
+  - $SPX.X
+  - $NDX.X
+  - $VIX.X
+  - SPY
+  - QQQ
+  - SVIX
+  - UVXY

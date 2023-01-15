@@ -1,0 +1,4 @@
+pandas==1.5.2
+psycopg2==2.9.5
+PyYAML==6.0
+tda_api==1.6.0

@@ -1,0 +1,5 @@
+filename: 'tda_option_flow.log'
+level: 'INFO'
+suppress:
+  logger: 'tda.auth'
+  level: 'WARNING'

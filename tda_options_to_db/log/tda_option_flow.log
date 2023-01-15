@@ -1,0 +1,170 @@
+INFO:root:2023-01-14 20:14:11.474382: Successfully obtained a connection from the connection pool.
+INFO:root:2023-01-14 20:14:11.475412: Table tda_daily_flow already exists
+INFO:root:2023-01-14 20:14:11.475412: Index symbol_tradeTime_quoteTime_idx already exists
+INFO:root:2023-01-14 20:14:11.913250: API Status: SVIX SUCCESS
+INFO:root:2023-01-14 20:14:11.920231: Submitting SVIX for consumption
+INFO:root:2023-01-14 20:14:11.955597: Successfully obtained a connection from the connection pool.
+INFO:root:2023-01-14 20:14:11.955597: Consuming option data for SVIX
+INFO:root:2023-01-14 20:14:11.955597: Processing 308 rows for SVIX
+INFO:root:2023-01-14 20:14:11.993498: Data insertion for SVIX completed successfully in 0.037890 seconds
+INFO:root:2023-01-14 20:14:11.993498: Successfully returned connection to the pool
+INFO:root:2023-01-14 20:14:11.993498: Done consuming option data for SVIX
+INFO:root:2023-01-14 20:14:12.218687: API Status: $VIX.X SUCCESS
+INFO:root:2023-01-14 20:14:12.301881: API Status: UVXY SUCCESS
+INFO:root:2023-01-14 20:14:12.318970: Submitting $VIX.X for consumption
+INFO:root:2023-01-14 20:14:12.319939: Successfully obtained a connection from the connection pool.
+INFO:root:2023-01-14 20:14:12.319939: Consuming option data for $VIX.X
+INFO:root:2023-01-14 20:14:12.319939: Processing 1368 rows for $VIX.X
+INFO:root:2023-01-14 20:14:12.325955: Submitting UVXY for consumption
+INFO:root:2023-01-14 20:14:12.484497: Successfully obtained a connection from the connection pool.
+INFO:root:2023-01-14 20:14:12.484497: Consuming option data for UVXY
+INFO:root:2023-01-14 20:14:12.484497: Processing 842 rows for UVXY
+INFO:root:2023-01-14 20:14:12.815610: Data insertion for $VIX.X completed successfully in 0.495470 seconds
+INFO:root:2023-01-14 20:14:12.830569: Data insertion for UVXY completed successfully in 0.345898 seconds
+INFO:root:2023-01-14 20:14:12.830569: Successfully returned connection to the pool
+INFO:root:2023-01-14 20:14:12.890416: Done consuming option data for $VIX.X
+INFO:root:2023-01-14 20:14:12.905370: Successfully returned connection to the pool
+INFO:root:2023-01-14 20:14:12.977808: API Status: QQQ SUCCESS
+INFO:root:2023-01-14 20:14:12.978807: API Status: $SPX.X FAILED
+INFO:root:2023-01-14 20:14:12.979773: Done consuming option data for UVXY
+WARNING:root:2023-01-14 20:14:13.014682: Markets might be closed for $SPX.X Check later
+ERROR:root:2023-01-14 20:14:13.015648: No data
+INFO:root:2023-01-14 20:14:13.033635: Submitting QQQ for consumption
+INFO:root:2023-01-14 20:14:13.033635: Successfully obtained a connection from the connection pool.
+INFO:root:2023-01-14 20:14:13.033635: Consuming option data for QQQ
+INFO:root:2023-01-14 20:14:13.033635: Processing 5842 rows for QQQ
+INFO:root:2023-01-14 20:14:13.734234: API Status: SPY SUCCESS
+INFO:root:2023-01-14 20:14:13.818814: Submitting SPY for consumption
+INFO:root:2023-01-14 20:14:13.860446: Successfully obtained a connection from the connection pool.
+INFO:root:2023-01-14 20:14:13.860446: Consuming option data for SPY
+INFO:root:2023-01-14 20:14:13.861471: Processing 8126 rows for SPY
+INFO:root:2023-01-14 20:14:14.696673: Data insertion for QQQ completed successfully in 1.662447 seconds
+INFO:root:2023-01-14 20:14:14.707922: Successfully returned connection to the pool
+INFO:root:2023-01-14 20:14:14.707922: Done consuming option data for QQQ
+INFO:root:2023-01-14 20:14:15.768256: API Status: $NDX.X SUCCESS
+INFO:root:2023-01-14 20:14:15.964102: Submitting $NDX.X for consumption
+INFO:root:2023-01-14 20:14:15.965150: Sleeping for 60 seconds
+INFO:root:2023-01-14 20:14:15.965150: Successfully obtained a connection from the connection pool.
+INFO:root:2023-01-14 20:14:15.965150: Consuming option data for $NDX.X
+INFO:root:2023-01-14 20:14:15.965150: Processing 19452 rows for $NDX.X
+INFO:root:2023-01-14 20:14:16.123583: Data insertion for SPY completed successfully in 2.262943 seconds
+INFO:root:2023-01-14 20:14:16.123583: Successfully returned connection to the pool
+INFO:root:2023-01-14 20:14:16.124580: Done consuming option data for SPY
+INFO:root:2023-01-14 20:14:17.992671: Data insertion for $NDX.X completed successfully in 2.027847 seconds
+INFO:root:2023-01-14 20:14:17.993629: Successfully returned connection to the pool
+INFO:root:2023-01-14 20:14:17.993629: Done consuming option data for $NDX.X
+INFO:root:2023-01-14 20:15:16.323514: API Status: SVIX SUCCESS
+INFO:root:2023-01-14 20:15:16.334643: Submitting SVIX for consumption
+INFO:root:2023-01-14 20:15:16.335604: Successfully obtained a connection from the connection pool.
+INFO:root:2023-01-14 20:15:16.335604: Consuming option data for SVIX
+INFO:root:2023-01-14 20:15:16.335604: Processing 308 rows for SVIX
+INFO:root:2023-01-14 20:15:16.366659: Data insertion for SVIX completed successfully in 0.031191 seconds
+INFO:root:2023-01-14 20:15:16.366659: Successfully returned connection to the pool
+INFO:root:2023-01-14 20:15:16.366659: Done consuming option data for SVIX
+INFO:root:2023-01-14 20:15:16.445243: API Status: UVXY SUCCESS
+INFO:root:2023-01-14 20:15:16.462387: Submitting UVXY for consumption
+INFO:root:2023-01-14 20:15:16.463384: Successfully obtained a connection from the connection pool.
+INFO:root:2023-01-14 20:15:16.463384: Consuming option data for UVXY
+INFO:root:2023-01-14 20:15:16.463384: Processing 842 rows for UVXY
+INFO:root:2023-01-14 20:15:16.995456: API Status: QQQ SUCCESS
+INFO:root:2023-01-14 20:15:17.009434: Data insertion for UVXY completed successfully in 0.546084 seconds
+INFO:root:2023-01-14 20:15:17.009434: Successfully returned connection to the pool
+INFO:root:2023-01-14 20:15:17.028507: Done consuming option data for UVXY
+INFO:root:2023-01-14 20:15:17.139378: API Status: $VIX.X SUCCESS
+INFO:root:2023-01-14 20:15:17.155640: Submitting $VIX.X for consumption
+INFO:root:2023-01-14 20:15:17.159845: Successfully obtained a connection from the connection pool.
+INFO:root:2023-01-14 20:15:17.160831: Consuming option data for $VIX.X
+INFO:root:2023-01-14 20:15:17.160831: Processing 1368 rows for $VIX.X
+INFO:root:2023-01-14 20:15:17.183279: Submitting QQQ for consumption
+INFO:root:2023-01-14 20:15:17.231478: Successfully obtained a connection from the connection pool.
+INFO:root:2023-01-14 20:15:17.231478: Consuming option data for QQQ
+INFO:root:2023-01-14 20:15:17.231478: Processing 5842 rows for QQQ
+INFO:root:2023-01-14 20:15:17.868133: Data insertion for $VIX.X completed successfully in 0.707084 seconds
+INFO:root:2023-01-14 20:15:17.868133: Successfully returned connection to the pool
+INFO:root:2023-01-14 20:15:17.868133: Done consuming option data for $VIX.X
+INFO:root:2023-01-14 20:15:17.999133: API Status: SPY SUCCESS
+INFO:root:2023-01-14 20:15:18.107822: Submitting SPY for consumption
+INFO:root:2023-01-14 20:15:18.107822: Successfully obtained a connection from the connection pool.
+INFO:root:2023-01-14 20:15:18.108819: Consuming option data for SPY
+INFO:root:2023-01-14 20:15:18.108819: Processing 8126 rows for SPY
+INFO:root:2023-01-14 20:15:18.832741: Data insertion for QQQ completed successfully in 1.601462 seconds
+INFO:root:2023-01-14 20:15:18.859249: Successfully returned connection to the pool
+INFO:root:2023-01-14 20:15:18.859249: Done consuming option data for QQQ
+INFO:root:2023-01-14 20:15:19.921990: API Status: $SPX.X SUCCESS
+INFO:root:2023-01-14 20:15:20.108539: Submitting $SPX.X for consumption
+INFO:root:2023-01-14 20:15:20.109563: Successfully obtained a connection from the connection pool.
+INFO:root:2023-01-14 20:15:20.109563: Consuming option data for $SPX.X
+INFO:root:2023-01-14 20:15:20.109563: Processing 18162 rows for $SPX.X
+INFO:root:2023-01-14 20:15:20.655838: Data insertion for SPY completed successfully in 2.547118 seconds
+INFO:root:2023-01-14 20:15:20.686094: Successfully returned connection to the pool
+INFO:root:2023-01-14 20:15:20.686094: Done consuming option data for SPY
+INFO:root:2023-01-14 20:15:21.855781: API Status: $NDX.X SUCCESS
+INFO:root:2023-01-14 20:15:22.089866: Submitting $NDX.X for consumption
+INFO:root:2023-01-14 20:15:22.090832: Sleeping for 60 seconds
+INFO:root:2023-01-14 20:15:22.090832: Successfully obtained a connection from the connection pool.
+INFO:root:2023-01-14 20:15:22.090832: Consuming option data for $NDX.X
+INFO:root:2023-01-14 20:15:22.090832: Processing 19452 rows for $NDX.X
+INFO:root:2023-01-14 20:15:23.502144: Data insertion for $SPX.X completed successfully in 3.392976 seconds
+INFO:root:2023-01-14 20:15:23.502144: Successfully returned connection to the pool
+INFO:root:2023-01-14 20:15:23.503141: Done consuming option data for $SPX.X
+INFO:root:2023-01-14 20:15:24.161032: Data insertion for $NDX.X completed successfully in 2.069727 seconds
+INFO:root:2023-01-14 20:15:24.161032: Successfully returned connection to the pool
+INFO:root:2023-01-14 20:15:24.161032: Done consuming option data for $NDX.X
+INFO:root:2023-01-14 20:16:22.364050: API Status: SVIX SUCCESS
+INFO:root:2023-01-14 20:16:22.375053: Submitting SVIX for consumption
+INFO:root:2023-01-14 20:16:22.376049: Successfully obtained a connection from the connection pool.
+INFO:root:2023-01-14 20:16:22.376049: Consuming option data for SVIX
+INFO:root:2023-01-14 20:16:22.376049: Processing 308 rows for SVIX
+INFO:root:2023-01-14 20:16:22.408239: Data insertion for SVIX completed successfully in 0.031397 seconds
+INFO:root:2023-01-14 20:16:22.408343: Successfully returned connection to the pool
+INFO:root:2023-01-14 20:16:22.408343: Done consuming option data for SVIX
+INFO:root:2023-01-14 20:16:22.496134: API Status: UVXY SUCCESS
+INFO:root:2023-01-14 20:16:22.511224: Submitting UVXY for consumption
+INFO:root:2023-01-14 20:16:22.511224: Successfully obtained a connection from the connection pool.
+INFO:root:2023-01-14 20:16:22.511224: Consuming option data for UVXY
+INFO:root:2023-01-14 20:16:22.511224: Processing 842 rows for UVXY
+INFO:root:2023-01-14 20:16:22.732891: Data insertion for UVXY completed successfully in 0.221411 seconds
+INFO:root:2023-01-14 20:16:22.732891: Successfully returned connection to the pool
+INFO:root:2023-01-14 20:16:22.732891: Done consuming option data for UVXY
+INFO:root:2023-01-14 20:16:23.005915: API Status: $VIX.X SUCCESS
+INFO:root:2023-01-14 20:16:23.164166: API Status: QQQ SUCCESS
+INFO:root:2023-01-14 20:16:23.228123: Submitting QQQ for consumption
+INFO:root:2023-01-14 20:16:23.232138: Submitting $VIX.X for consumption
+INFO:root:2023-01-14 20:16:23.232138: Successfully obtained a connection from the connection pool.
+INFO:root:2023-01-14 20:16:23.232138: Consuming option data for QQQ
+INFO:root:2023-01-14 20:16:23.232138: Processing 5842 rows for QQQ
+INFO:root:2023-01-14 20:16:23.279509: Successfully obtained a connection from the connection pool.
+INFO:root:2023-01-14 20:16:23.280519: Consuming option data for $VIX.X
+INFO:root:2023-01-14 20:16:23.280519: Processing 1368 rows for $VIX.X
+INFO:root:2023-01-14 20:16:23.855231: Data insertion for $VIX.X completed successfully in 0.574606 seconds
+INFO:root:2023-01-14 20:16:23.855231: Successfully returned connection to the pool
+INFO:root:2023-01-14 20:16:23.855231: Done consuming option data for $VIX.X
+INFO:root:2023-01-14 20:16:24.052877: API Status: SPY SUCCESS
+INFO:root:2023-01-14 20:16:24.163310: Submitting SPY for consumption
+INFO:root:2023-01-14 20:16:24.164277: Successfully obtained a connection from the connection pool.
+INFO:root:2023-01-14 20:16:24.164277: Consuming option data for SPY
+INFO:root:2023-01-14 20:16:24.164277: Processing 8126 rows for SPY
+INFO:root:2023-01-14 20:16:24.487994: Data insertion for QQQ completed successfully in 1.255579 seconds
+INFO:root:2023-01-14 20:16:24.487994: Successfully returned connection to the pool
+INFO:root:2023-01-14 20:16:24.487994: Done consuming option data for QQQ
+INFO:root:2023-01-14 20:16:25.896399: Data insertion for SPY completed successfully in 1.731830 seconds
+INFO:root:2023-01-14 20:16:25.935902: Successfully returned connection to the pool
+INFO:root:2023-01-14 20:16:25.935902: Done consuming option data for SPY
+INFO:root:2023-01-14 20:16:26.125481: API Status: $SPX.X SUCCESS
+INFO:root:2023-01-14 20:16:26.311969: Submitting $SPX.X for consumption
+INFO:root:2023-01-14 20:16:26.312597: Successfully obtained a connection from the connection pool.
+INFO:root:2023-01-14 20:16:26.312597: Consuming option data for $SPX.X
+INFO:root:2023-01-14 20:16:26.312597: Processing 18162 rows for $SPX.X
+INFO:root:2023-01-14 20:16:28.037850: API Status: $NDX.X SUCCESS
+INFO:root:2023-01-14 20:16:28.237290: Submitting $NDX.X for consumption
+INFO:root:2023-01-14 20:16:28.238293: Sleeping for 60 seconds
+INFO:root:2023-01-14 20:16:28.277856: Successfully obtained a connection from the connection pool.
+INFO:root:2023-01-14 20:16:28.277856: Consuming option data for $NDX.X
+INFO:root:2023-01-14 20:16:28.277856: Processing 19452 rows for $NDX.X
+INFO:root:2023-01-14 20:16:29.680817: Data insertion for $SPX.X completed successfully in 3.369006 seconds
+INFO:root:2023-01-14 20:16:29.681786: Successfully returned connection to the pool
+INFO:root:2023-01-14 20:16:29.681786: Done consuming option data for $SPX.X
+INFO:root:2023-01-14 20:16:30.330492: Data insertion for $NDX.X completed successfully in 2.052381 seconds
+INFO:root:2023-01-14 20:16:30.330492: Successfully returned connection to the pool
+INFO:root:2023-01-14 20:16:30.330492: Done consuming option data for $NDX.X
+WARNING:root:2023-01-14 20:16:51.748949: Keyboard Interrupt. Exiting

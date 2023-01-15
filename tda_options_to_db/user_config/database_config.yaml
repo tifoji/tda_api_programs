@@ -1,0 +1,11 @@
+postgres:
+  host: localhost
+  port: 5455
+  database: options
+  user: postgres
+  password: thinkorswim
+  table_name: tda_daily_flow
+  index_name: symbol_tradeTime_quoteTime_idx
+threading:
+  minThreadPoolSize: 1
+  maxThreadPoolSize: 10
