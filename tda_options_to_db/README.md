@@ -42,7 +42,8 @@ To stop just press ctrl+c. The script will stop after the current iteration is c
 
 
 ### Directory Structure
-tda_options_to_dbg/
+```
+tda_options_to_db/
 |-- tda_option_chain_to_db.py.py
 |-- globals.py
 |-- db/
@@ -65,4 +66,4 @@ tda_options_to_dbg/
     |-- sample_postgres_data.csv
 |-- token/
     |-- token.pickle
-
+```
