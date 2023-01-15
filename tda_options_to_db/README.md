@@ -39,3 +39,30 @@ By default some of the elements returned by the API are not stored. You can look
 Just run /path/to/python tda_option_chain_to_db.py
 
 To stop just press ctrl+c. The script will stop after the current iteration is complete. Or you can kill the process.
+
+
+### Directory Structure
+tda_options_to_dbg/
+|-- tda_option_chain_to_db.py.py
+|-- globals.py
+|-- db/
+    |-- db_globals.py
+    |-- db_statements.py
+    |-- columns.yaml
+|-- user_config/
+    |-- basic_config.yaml
+    |-- tickers.yaml
+    |-- log_config.yaml
+    |-- database_config.yaml
+    |-- tda_credentials.yaml
+|-- log/
+    |-- tda_option_flow.log
+|-- requirements/
+    |-- requirements.txt
+|-- samples/
+    |-- sample_api_response.json
+    |-- sample_query.sql
+    |-- sample_postgres_data.csv
+|-- token/
+    |-- token.pickle
+
