@@ -271,7 +271,7 @@ def main():
                         consume_futures = consume_executor.submit(consume_data, option_data)
                     else:
                         logging.error(f"{datetime.datetime.now()}: No data")
-                logging.info(f"{datetime.datetime.now()}: Sleeping for 60 seconds")
+                logging.info(f"{datetime.datetime.now()}: Sleeping for {sleepTime} seconds")
                 time.sleep(sleepTime)
             except KeyboardInterrupt:
                 produce_executor.shutdown()
