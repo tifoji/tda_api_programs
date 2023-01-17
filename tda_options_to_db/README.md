@@ -44,7 +44,7 @@ To stop just press `ctrl+c`. The script will stop after the current iteration is
 ### Directory Structure
 ```
 tda_options_to_db/
-|-- tda_option_chain_to_db.py.py
+|-- tda_option_chain_to_db.py
 |-- globals.py
 |-- db/
     |-- db_globals.py
