@@ -35,7 +35,8 @@ def IV = if isNaN(SeriesVolatility(underlyingSymbol = symbol, series = Series_IV
                then IV[1]
                else SeriesVolatility(underlyingSymbol = symbol,series = Series_IV);
 
-def S = if IsNan(close(symbol=symbol)) then close(symbol=symbol, aggregationPeriod.DAY) else close(symbol=symbol) ;
+#def S = if IsNan(close(symbol=symbol)) then close(symbol=symbol, aggregationPeriod.DAY) else close(symbol=symbol) ;
+def S =  if(isRTH) then close(symbol=symbol) else close(symbol=symbol, aggregationPeriod.DAY) ;
 
 def ATM = if S >= Round(S / Strike_Spread, 0) * Strike_Spread
                   then Round(S/Strike_Spread, 0) * Strike_Spread
@@ -86,8 +87,6 @@ script N {
 def d1 = (Log(S / K) + ((r - q + (Power(IV, 2)) / 2) * t)) / (IV * Sqrt(t)); # standardized return of the underlying asset over the life of the option, adjusted for volatility.
 def d2 = d1 - IV * Sqrt(t); # proxy for likelihood that the option will be in the money at expiration.
 def phi_d1 = Exp(-(Power(d1, 2)) / 2) / Sqrt(2 * Double.Pi); # standard normal probability density function (pdf) at d1.
-
-
 
 #################### Option Greeks #########################################################
 
@@ -165,8 +164,6 @@ AddLabel(showPricing, "Put Price = " + Put_Price, Color.WHITE);
 
 
 #################### Debugging     #########################################################
-
-
 
 #AddLabel(1, "Strike Price (K) = " + K, Color.WHITE);
 #AddLabel(1, "Underlying Price (S) = " + S, Color.WHITE);
