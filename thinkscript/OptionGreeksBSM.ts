@@ -22,44 +22,33 @@ input useATM = no;   #hint useATM: If set to yes, this overrides userK and sets 
 input showGreeks = no;
 input showPricing = no; # Show BSM Call and Put Price estimates
 
-
 def year = Floor(expirationDate / 10000);
 def month = Floor((expirationDate - (year * 10000)) / 100);
 def day = expirationDate % 100;
 def fullExpirationDate = 20000000 + expirationDate;  # Prepends "20" to expirationDate
-
 def isRTH = RegularTradingStart(GetYYYYMMDD()) <= GetTime() and RegularTradingEnd(GetYYYYMMDD()) > GetTime();
 
 def DayToExpiry = DaysTillDate(fullExpirationDate);
 def IV = if isNaN(SeriesVolatility(underlyingSymbol = symbol, series = Series_IV))
                then IV[1]
                else SeriesVolatility(underlyingSymbol = symbol,series = Series_IV);
-
-#def S = if IsNan(close(symbol=symbol)) then close(symbol=symbol, aggregationPeriod.DAY) else close(symbol=symbol) ;
 def S =  if(isRTH) then close(symbol=symbol) else close(symbol=symbol, aggregationPeriod.DAY) ;
+def r = GetInterestRate();
+def t = DayToExpiry / 365;
 
 def ATM = if S >= Round(S / Strike_Spread, 0) * Strike_Spread
                   then Round(S/Strike_Spread, 0) * Strike_Spread
                   else (Round(S/Strike_Spread, 0) * Strike_Spread) - Strike_Spread; 
+
 def K = if useATM then ATM else userK;
 
-def r = GetInterestRate();
-def t = DayToExpiry / 365;
-def CurrDivi = if IsNaN(GetDividend())
-               then CurrDivi[1]
-               else GetDividend();
-def LastDividend = if CurrDivi != CurrDivi[1]
-                   then CurrDivi[1]
-                   else LastDividend[1];
-def YearlyDiv = if LastDividend == 0
-                then CurrDivi * 4
-                else if LastDividend < CurrDivi
-                     then (LastDividend * 3) + CurrDivi
-                     else YearlyDiv[1];
+def CurrDivi = if IsNaN(GetDividend()) then CurrDivi[1] else GetDividend();
+def LastDividend = if CurrDivi != CurrDivi[1] then CurrDivi[1] else LastDividend[1];
+def YearlyDiv = if LastDividend == 0 then CurrDivi * 4 else if LastDividend < CurrDivi then (LastDividend * 3) + CurrDivi else YearlyDiv[1];
 def q = YearlyDiv / S;
 
-
 # Abramowitz and Stegun approximation for cumulative normal distribution 
+
 script N {
     input x = 0.0;
     def b1 = 0.319381530;
@@ -84,6 +73,7 @@ script N {
 }
 
 #################### BSM Coefficients ######################################################
+
 def d1 = (Log(S / K) + ((r - q + (Power(IV, 2)) / 2) * t)) / (IV * Sqrt(t)); # standardized return of the underlying asset over the life of the option, adjusted for volatility.
 def d2 = d1 - IV * Sqrt(t); # proxy for likelihood that the option will be in the money at expiration.
 def phi_d1 = Exp(-(Power(d1, 2)) / 2) / Sqrt(2 * Double.Pi); # standard normal probability density function (pdf) at d1.
