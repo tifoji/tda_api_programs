@@ -1,0 +1,78 @@
+#tifoji @github/discord
+
+
+declare lower;
+
+input symbol = "SPX";
+input priceType = PriceType.LAST;
+input period = AggregationPeriod.THREE_MIN;
+input length = 10; # Adjust as desired for the moving average length
+input averageType = AverageType.SIMPLE;
+
+plot ImpliedVolatilitySPX = imp_volatility(symbol = symbol, period=period, priceType = priceType);
+
+ImpliedVolatilitySPX.SetPaintingStrategy(PaintingStrategy.LINE);
+ImpliedVolatilitySPX.SetLineWeight(2);
+ImpliedVolatilitySPX.SetStyle(Curve.FIRM);
+ImpliedVolatilitySPX.AssignValueColor(if ImpliedVolatilitySPX > ImpliedVolatilitySPX[1] then Color.WHITE else Color.RED);
+
+# Add a moving average
+plot Avg = MovingAverage(averageType, ImpliedVolatilitySPX, length);
+Avg.SetDefaultColor(Color.YELLOW);
+
+# Define your start and end times
+input startTime = 0930;  # Market open
+input endTime = 1200;    # 12 PM
+# Check if the current bar is within the desired time range
+def isInTimeRange = SecondsFromTime(startTime) >= 0 and SecondsTillTime(endTime) >= 0;
+
+# Calculate the highest and lowest level within the time range
+def MaxLevel;
+def MinLevel;
+if isInTimeRange and !isInTimeRange[1] then {
+    MaxLevel = ImpliedVolatilitySPX;
+    MinLevel = ImpliedVolatilitySPX;
+} else if isInTimeRange then {
+    MaxLevel = Max(MaxLevel[1], ImpliedVolatilitySPX);
+    MinLevel = Min(MinLevel[1], ImpliedVolatilitySPX);
+} else {
+    MaxLevel = MaxLevel[1];
+    MinLevel = MinLevel[1];
+}
+
+# Calculate the range
+def Range = MaxLevel - MinLevel;
+
+# Add horizontal lines at 50% and 75% within the range
+plot Level50 = MinLevel + 0.5 * Range;
+Level50.SetDefaultColor(GetColor(3));
+Level50.HideTitle();
+Level50.HideBubble();
+Level50.SetStyle(Curve.LONG_DASH);
+
+plot Level75 = MinLevel + 0.75 * Range;
+Level75.SetDefaultColor(GetColor(4));
+Level75.HideTitle();
+Level75.HideBubble();
+Level75.SetStyle(Curve.LONG_DASH);
+
+# Add a horizontal line at the maximum level (100% level)
+plot Level100 = MaxLevel;
+Level100.SetDefaultColor(GetColor(5));
+Level100.HideTitle();
+Level100.HideBubble();
+Level100.SetStyle(Curve.LONG_DASH);
+
+# Add a horizontal line at the HighestAll level
+plot HighestAll = HighestAll(ImpliedVolatilitySPX);
+HighestAll.SetDefaultColor(GetColor(6));
+HighestAll.HideTitle();
+HighestAll.HideBubble();
+HighestAll.SetStyle(Curve.LONG_DASH);
+
+# Add a horizontal line at the LowestAll level
+plot LowestAll = LowestAll(ImpliedVolatilitySPX);
+HighestAll.SetDefaultColor(GetColor(7));
+HighestAll.HideTitle();
+HighestAll.HideBubble();
+HighestAll.SetStyle(Curve.LONG_DASH);
