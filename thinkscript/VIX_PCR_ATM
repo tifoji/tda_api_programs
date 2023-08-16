@@ -1,0 +1,117 @@
+#tifoji @github/discord
+
+declare lower;
+declare once_per_bar;
+
+input symbol = "VIX";
+input suffix = ""; #hint suffix: Add W for weeklies.
+input expirationDate = 230816; #hint expirationDate: Update to target expiration date as needed. 
+input Strike_Spread = 1; #hint Strike_Spread: Spread between successive strikes
+input userK = 16;  #hint userK: Manual target strike. 
+input useATM = yes;   #hint useATM: If set to yes, this overrides userK and sets K to the ATM Strike
+input LowerStrikes = 2;
+input HigherStrikes = 2;
+input showplot = "yes"; #hint showplot: Choose whether to display the ATM Put/Call Ratio plot.
+
+
+def year = Floor(expirationDate / 10000);
+def month = Floor((expirationDate - (year * 10000)) / 100);
+def day = expirationDate % 100;
+def isRTH = RegularTradingStart(GetYYYYMMDD()) <= GetTime() and RegularTradingEnd(GetYYYYMMDD()) > GetTime();
+def S =  if(isRTH) then close(symbol=symbol) else close(symbol=symbol, aggregationPeriod.DAY) ;
+
+
+def ATM = if S >= Round(S / Strike_Spread, 0) * Strike_Spread
+                  then Round(S/Strike_Spread, 0) * Strike_Spread
+                  else (Round(S/Strike_Spread, 0) * Strike_Spread) - Strike_Spread; 
+
+def K = if useATM then ATM else userK;
+
+
+def LowStrike = ATM - (LowerStrikes * Strike_Spread);
+def HighStrike = ATM + (HigherStrikes * Strike_Spread);
+
+
+def ATML2Strike = ATM - 2 * Strike_Spread;
+def ATML2CV = if !IsNaN(volume("." + symbol + suffix + AsPrice(expirationDate) + "C" + AsPrice(ATML2Strike))) 
+          then volume("." + symbol + suffix + AsPrice(expirationDate) + "C" + AsPrice(ATML2Strike)) 
+          else 0;
+
+def ATML2PV = if !IsNaN(volume("." + symbol + suffix + AsPrice(expirationDate) + "P" + AsPrice(ATML2Strike))) 
+          then volume("." + symbol + suffix + AsPrice(expirationDate) + "P" + AsPrice(ATML2Strike)) 
+          else 0;
+
+
+def ATML1Strike = ATM - Strike_Spread;
+def ATML1CV = if !IsNaN(volume("." + symbol + suffix + AsPrice(expirationDate) + "C" + AsPrice(ATML1Strike))) 
+          then volume("." + symbol + suffix + AsPrice(expirationDate) + "C" + AsPrice(ATML1Strike)) 
+          else 0;
+
+def ATML1PV = if !IsNaN(volume("." + symbol + suffix + AsPrice(expirationDate) + "P" + AsPrice(ATML1Strike))) 
+          then volume("." + symbol + suffix + AsPrice(expirationDate) + "P" + AsPrice(ATML1Strike)) 
+          else 0;
+
+#ATM Strike
+def ATMCV = if !IsNaN(volume("." + symbol + suffix + AsPrice(expirationDate) + "C" + AsPrice(ATM))) 
+        then volume("." + symbol + suffix + AsPrice(expirationDate) + "C" + AsPrice(ATM)) 
+        else 0;
+
+def ATMPV = if !IsNaN(volume("." + symbol + suffix + AsPrice(expirationDate) + "P" + AsPrice(ATM))) 
+        then volume("." + symbol + suffix + AsPrice(expirationDate) + "P" + AsPrice(ATM)) 
+        else 0;
+
+def ATMH1Strike = ATM + Strike_Spread;
+def ATMH1CV = if !IsNaN(volume("." + symbol + suffix + AsPrice(expirationDate) + "C" + AsPrice(ATMH1Strike))) 
+          then volume("." + symbol + suffix + AsPrice(expirationDate) + "C" + AsPrice(ATMH1Strike)) 
+          else 0;
+
+def ATMH1PV = if !IsNaN(volume("." + symbol + suffix + AsPrice(expirationDate) + "P" + AsPrice(ATMH1Strike))) 
+          then volume("." + symbol + suffix + AsPrice(expirationDate) + "P" + AsPrice(ATMH1Strike)) 
+          else 0;
+
+
+def ATMH2Strike = ATM + 2 * Strike_Spread;
+def ATMH2CV = if !IsNaN(volume("." + symbol + suffix + AsPrice(expirationDate) + "C" + AsPrice(ATMH2Strike))) 
+          then volume("." + symbol + suffix + AsPrice(expirationDate) + "C" + AsPrice(ATMH2Strike)) 
+          else 0;
+
+def ATMH2PV = if !IsNaN(volume("." + symbol + suffix + AsPrice(expirationDate) + "P" + AsPrice(ATMH2Strike))) 
+          then volume("." + symbol + suffix + AsPrice(expirationDate) + "P" + AsPrice(ATMH2Strike)) 
+          else 0;
+
+
+# Labels
+AddLabel(yes,(if month == 1 then "JAN"
+else if month == 2 then "FEB"
+else if month == 3 then "MAR"
+else if month == 4 then "APR"
+else if month == 5 then "MAY"
+else if month == 6 then "JUN"
+else if month == 7 then "JUL"
+else if month == 8 then "AUG"
+else if month == 9 then "SEP"
+else if month == 10 then "OCT"
+else if month == 11 then "NOV"
+else "DEC") + " " + day + " " , CreateColor(153,153,255));
+
+AddLabel(yes, ATML2Strike + " : " + AsPercent(ATML2PV / ATML2CV), 
+         if (ATML2PV / ATML2CV) > (ATML2PV[1] / ATML2CV[1]) then Color.GREEN else if (ATML2PV / ATML2CV) < (ATML2PV[1] / ATML2CV[1]) then Color.RED else Color.WHITE);
+
+AddLabel(yes, ATML1Strike + " : " + AsPercent(ATML1PV / ATML1CV), 
+         if (ATML1PV / ATML1CV) > (ATML1PV[1] / ATML1CV[1]) then Color.GREEN else if (ATML1PV / ATML1CV) < (ATML1PV[1] / ATML1CV[1]) then Color.RED else Color.WHITE);
+
+AddLabel(yes, "ATM (" + ATM + "): " + AsPercent(ATMPV / ATMCV), 
+         if (ATMPV / ATMCV) > (ATMPV[1] / ATMCV[1]) then Color.GREEN else if (ATMPV / ATMCV) < (ATMPV[1] / ATMCV[1]) then Color.RED else Color.WHITE);
+
+AddLabel(yes, ATMH1Strike + " : " + AsPercent(ATMH1PV / ATMH1CV), 
+         if (ATMH1PV / ATMH1CV) > (ATMH1PV[1] / ATMH1CV[1]) then Color.GREEN else if (ATMH1PV / ATMH1CV) < (ATMH1PV[1] / ATMH1CV[1]) then Color.RED else Color.WHITE);
+
+AddLabel(yes, ATMH2Strike + " : " + AsPercent(ATMH2PV / ATMH2CV), 
+         if (ATMH2PV / ATMH2CV) > (ATMH2PV[1] / ATMH2CV[1]) then Color.GREEN else if (ATMH2PV / ATMH2CV) < (ATMH2PV[1] / ATMH2CV[1]) then Color.RED else Color.WHITE);
+
+#plot
+def ATM_PCR = ATMPV / ATMCV;
+plot PCR_Histogram = ATM_PCR;
+PCR_Histogram.SetPaintingStrategy(PaintingStrategy.HISTOGRAM);
+PCR_Histogram.SetDefaultColor(Color.BLUE);
+PCR_Histogram.AssignValueColor(if ATM_PCR > 1 then Color.GREEN else Color.RED);
