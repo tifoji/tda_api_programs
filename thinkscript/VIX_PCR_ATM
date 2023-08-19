@@ -31,7 +31,7 @@ def ATMCV = if !IsNaN(volume("." + symbol + suffix + AsPrice(expirationDate) + "
 def ATMPV = if !IsNaN(volume("." + symbol + suffix + AsPrice(expirationDate) + "P" + AsPrice(ATM))) 
             then volume("." + symbol + suffix + AsPrice(expirationDate) + "P" + AsPrice(ATM)) else 0;
 
-# Cumulative totals through RTH progression
+# Cumulative totals through ETH/RTH progression
 def Active = GetDay() == GetLastDay(); #Today
 def cumulativeCV = if Active and !Active[1] then ATMCV else if Active then cumulativeCV[1] + ATMCV else cumulativeCV[1];
 def cumulativePV = if Active and !Active[1] then ATMPV else if Active then cumulativePV[1] + ATMPV else cumulativePV[1];
