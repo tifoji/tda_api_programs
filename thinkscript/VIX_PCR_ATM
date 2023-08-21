@@ -16,8 +16,8 @@ def day = expirationDate % 100;
 def isRTH = RegularTradingStart(GetYYYYMMDD()) <= GetTime() and RegularTradingEnd(GetYYYYMMDD()) > GetTime();
 
 def S =  if !IsNaN(close(symbol=symbol)) then  close(symbol=symbol) 
-         else if !IsNaN(close(symbol=symbol,aggregationPeriod.DAY,PriceType.LAST)[1]) then close(symbol=symbol,aggregationPeriod.DAY,PriceType.LAST)[1] 
-         else close(symbol=symbol,aggregationPeriod.DAY,PriceType.LAST) ;
+         else if !IsNaN(close(symbol=symbol,aggregationPeriod.DAY,PriceType.LAST)) then close(symbol=symbol,aggregationPeriod.DAY,PriceType.LAST) 
+         else close(symbol=symbol,aggregationPeriod.DAY,PriceType.LAST)[1] ;
 
 def adjusted_Strike_Spread = if S < 15 then 0.5 else Strike_Spread;
 
