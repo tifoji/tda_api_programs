@@ -14,7 +14,10 @@ def year = Floor(expirationDate / 10000);
 def month = Floor((expirationDate - (year * 10000)) / 100);
 def day = expirationDate % 100;
 def isRTH = RegularTradingStart(GetYYYYMMDD()) <= GetTime() and RegularTradingEnd(GetYYYYMMDD()) > GetTime();
-def S =  if !IsNaN(close(symbol=symbol)) then close(symbol=symbol) else close(symbol=symbol,aggregationPeriod.DAY,PriceType.LAST) ;
+
+def S =  if !IsNaN(close(symbol=symbol)) then  close(symbol=symbol) 
+         else if !IsNaN(close(symbol=symbol,aggregationPeriod.DAY,PriceType.LAST)[1]) then close(symbol=symbol,aggregationPeriod.DAY,PriceType.LAST)[1] 
+         else close(symbol=symbol,aggregationPeriod.DAY,PriceType.LAST) ;
 
 def adjusted_Strike_Spread = if S < 15 then 0.5 else Strike_Spread;
 
@@ -24,7 +27,7 @@ def ATM = if S >= Round(S / adjusted_Strike_Spread, 0) * adjusted_Strike_Spread
 
 def K = if useATM then ATM else userK;
 
-#ATM Strike
+#ATM Volume
 def ATMCV = if !IsNaN(volume("." + symbol + suffix + AsPrice(expirationDate) + "C" + AsPrice(ATM)))  
             then volume("." + symbol + suffix + AsPrice(expirationDate) + "C" + AsPrice(ATM)) else 0;
 
