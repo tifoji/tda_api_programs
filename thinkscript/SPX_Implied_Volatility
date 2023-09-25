@@ -9,7 +9,7 @@ input period = AggregationPeriod.THREE_MIN;
 input length = 10; # Adjust as desired for the moving average length
 input averageType = AverageType.SIMPLE;
 
-plot ImpliedVolatilitySPX = imp_volatility(symbol = symbol, period=period, priceType = priceType);
+plot ImpliedVolatilitySPX = imp_volatility(symbol = symbol, period=GetAggregationPeriod(), priceType = priceType);
 
 ImpliedVolatilitySPX.SetPaintingStrategy(PaintingStrategy.LINE);
 ImpliedVolatilitySPX.SetLineWeight(2);
