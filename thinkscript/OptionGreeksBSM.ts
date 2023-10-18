@@ -16,7 +16,7 @@ declare once_per_bar;
 input symbol = "SPX";
 input expirationDate = 230721; #hint expirationDate: Update to target expiration date as needed. 
 input Strike_Spread = 5; #hint Strike_Spread: Spread between successive strikes
-input Series_IV = 14; #hint Series_IV: Get the series sequence/number from TOS Option Chain Window. 
+input Series_IV = 1; #hint Series_IV: Get the series sequence/number from TOS Option Chain Window. 
 input userK = 4450;  #hint userK: Manual target strike. Typically select a strike 2x-5x OTM
 input useATM = no;   #hint useATM: If set to yes, this overrides userK and sets K to the ATM Strike
 input showGreeks = no;
