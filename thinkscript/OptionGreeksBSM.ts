@@ -85,7 +85,8 @@ def Call_Delta = Exp(-q * t) * N(d1);
 def Put_Delta = Exp(-q * t) * (N(d1) - 1);
 
 # Gamma calculation
-def Gamma = Exp(-q * t) * phi_d1 / (S * IV * Sqrt(t));
+def bsmGamma = Exp(-q * t) * phi_d1 / (S * IV * Sqrt(t));
+def Gamma = if IsPut then -(bsmGamma) else (bsmGamma);
 
 # Theta calculation
 def Call_Theta = -(S * Exp(-q * t) * phi_d1 * IV) / (2 * Sqrt(t)) - r * K * Exp(-r * t) * N(d2) + q * S * Exp(-q * t) * N(d1);
@@ -102,7 +103,8 @@ def Call_Rho = K * t * Exp(-r * t) * N(d2)/100;
 def Put_Rho = -K * t * Exp(-r * t) * N(-d2)/100;
 
 # Vanna calculation
-plot Vanna = Exp(-q * t) * Sqrt(t) * d2 * phi_d1 / IV;
+def bsmVanna = Exp(-q * t) * Sqrt(t) * d2 * phi_d1 / IV;
+plot Vanna = if IsPut then -(bsmVanna) else bsmVanna;
 Vanna.SetPaintingStrategy(PaintingStrategy.HISTOGRAM);
 
 # Volga/Vomma calculation
