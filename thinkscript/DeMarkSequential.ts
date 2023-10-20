@@ -25,9 +25,31 @@
 # - Buy Array Perfection: Current bar's Low is less or equal to the Close from 5 bars ago.
 # - Sell Array Perfection: Current bar's High is greater or equal to the Close from 5 bars ago.
 
-# Signals:
-# - BuySignal: Plotted after Buy Formation is complete and meets either Buy Formation Perfection or Buy Array Perfection.
-# - SellSignal: Plotted after Sell Formation is complete and meets either Sell Formation Perfection or Sell Array Perfection.
+# Arrow/Color Guide:
+#
+# 1. Green Arrow (Upwards):
+#    - Indicates the completion of a Buy Formation Perfection.
+#    - Suggests bullish sentiment, but watch for the Array phase for further confirmation.
+#
+# 2. Red Arrow (Downwards):
+#    - Indicates the completion of a Sell Formation Perfection.
+#    - Suggests bearish sentiment, but watch for the Array phase for further confirmation.
+#
+# 3. Yellow Arrow (Upwards):
+#    - Indicates the start of a Buy Array Phase after Buy Formation.
+#    - Represents the continuation of bullish sentiment.
+#
+# 4. Dark Orange Arrow (Downwards):
+#    - Indicates the start of a Sell Array Phase after Sell Formation.
+#    - Represents the continuation of bearish sentiment.
+#
+# 5. Pink Arrow (Downwards):
+#    - Indicates the completion of a Buy Array Phase (after 13 bars).
+#    - Suggests a potential bearish reversal, signaling an end to the Buy Array.
+#
+# 6. White Arrow (Upwards):
+#    - Indicates the completion of a Sell Array Phase (after 13 bars).
+#    - Suggests a potential bullish reversal, signaling an end to the Sell Array.
 
 # -----------------------------------
 
@@ -99,9 +121,25 @@ SellArrowArray.SetPaintingStrategy(PaintingStrategy.BOOLEAN_ARROW_DOWN);
 SellArrowArray.AssignValueColor(color.dark_orange);
 SellArrowArray.SetLineWeight(3);
 
+# Arrows to indicate completion (potential reversal) of the signal
+def BuyArrayCompletion = BuyArrayCount == 13;
+def SellArrayCompletion = SellArrayCount == 13;
+
+plot BuyArrayEndArrow = BuyArrayCompletion[1] and !BuyArrayCompletion;  
+BuyArrayEndArrow.SetPaintingStrategy(PaintingStrategy.BOOLEAN_ARROW_DOWN);  
+BuyArrayEndArrow.AssignValueColor(color.pink);
+BuyArrayEndArrow.SetLineWeight(3);
+
+plot SellArrayEndArrow = SellArrayCompletion[1] and !SellArrayCompletion;  
+SellArrayEndArrow.SetPaintingStrategy(PaintingStrategy.BOOLEAN_ARROW_UP);  
+SellArrayEndArrow.AssignValueColor(color.white);
+SellArrayEndArrow.SetLineWeight(3);
+
 AddLabel(showLabels, "Buy Formation Count: " + BuyFormationCount, color.white);
-AddLabel(showLabels, "Sell Formation Count: " + SellFormationCount, color.white);
+AddLabel(ShowLabels, "Sell Formation Count: " + SellFormationCount, color.white);
 AddLabel(showLabels, "Buy Array Count: " + BuyArrayCount, color.white);
-AddLabel(showLabels, "Sell Array Count: " + SellArrayCount, color.white);
+AddLabel(ShowLabels, "Sell Array Count: " + SellArrayCount, color.white);
+AddLabel(showLabels and BuyArrayCompletion+1, "Buy Signal End", color.pink);
+AddLabel(showLabels and SellArrayCompletion+1, "Sell Signal End", color.white);
 
 
