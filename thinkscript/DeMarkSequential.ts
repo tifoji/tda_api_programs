@@ -30,6 +30,8 @@
 
 # -----------------------------------
 
+input symbol = "SPY";
+
 # Definitions
 def O = open(symbol=symbol);
 def H = high(symbol=symbol);
