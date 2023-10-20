@@ -1,5 +1,6 @@
 # -----------------------------------
 # Demark implementation tifoji@github
+# https://tlc.thinkorswim.com/center/reference/Tech-Indicators/studies-library/R-S/SequenceCounter
 # -----------------------------------
 
 # Formation Phase:
@@ -31,6 +32,7 @@
 # -----------------------------------
 
 input symbol = "SPY";
+input showLabels = no;
 
 # Definitions
 def O = open(symbol=symbol);
@@ -60,7 +62,7 @@ def StartSellArrayBar = if SellFormationComplete and SellIntersection then barNu
 def BuyArrayCount = if barNumber() > StartBuyArrayBar and C <= L[2] then BuyArrayCount[1] + 1 else if barNumber() > StartBuyArrayBar then BuyArrayCount[1] else 0;
 def SellArrayCount = if barNumber() > StartSellArrayBar and C >= H[2] then SellArrayCount[1] + 1 else if barNumber() > StartSellArrayBar then SellArrayCount[1] else 0;
 
-# Array criteria based on the description
+# Array criteria 
 def BuyArrayCondition = C <= L[2];
 def SellArrayCondition = C >= H[2];
 
@@ -70,7 +72,36 @@ def SellFormationPerfection = (H > H[2] and H > H[3]) or (H[1] > H[2] and H[1] >
 def BuyArrayPerfection = L <= C[5];
 def SellArrayPerfection = H >= C[5];
 
-# Signals based on Array and Perfection Criteria
-plot BuySignal = BuyFormationComplete and (BuyFormationPerfection or BuyArrayPerfection) and BuyArrayCondition and BuyArrayCount <= 13;
-plot SellSignal = SellFormationComplete and (SellFormationPerfection or SellArrayPerfection) and SellArrayCondition and SellArrayCount <= 13;
+# Signals:
+def BuyFormationSignal = BuyFormationComplete and BuyFormationPerfection;
+def SellFormationSignal = SellFormationComplete and SellFormationPerfection;
+def BuyArraySignal = BuyFormationComplete and BuyArrayPerfection and BuyArrayCondition and BuyArrayCount <= 13;
+def SellArraySignal = SellFormationComplete and SellArrayPerfection and SellArrayCondition and SellArrayCount <= 13;
+
+# Plots for the signals:
+plot BuyArrowFormation = BuyFormationSignal;
+BuyArrowFormation.SetPaintingStrategy(PaintingStrategy.BOOLEAN_ARROW_UP);
+BuyArrowFormation.AssignValueColor(color.green);
+BuyArrowFormation.SetLineWeight(3);
+
+plot SellArrowFormation = SellFormationSignal;
+SellArrowFormation.SetPaintingStrategy(PaintingStrategy.BOOLEAN_ARROW_DOWN);
+SellArrowFormation.AssignValueColor(color.red);
+SellArrowFormation.SetLineWeight(3);
+
+plot BuyArrowArray = BuyArraySignal;
+BuyArrowArray.SetPaintingStrategy(PaintingStrategy.BOOLEAN_ARROW_UP);
+BuyArrowArray.AssignValueColor(color.yellow);
+BuyArrowArray.SetLineWeight(3);
+
+plot SellArrowArray = SellArraySignal;
+SellArrowArray.SetPaintingStrategy(PaintingStrategy.BOOLEAN_ARROW_DOWN);
+SellArrowArray.AssignValueColor(color.dark_orange);
+SellArrowArray.SetLineWeight(3);
+
+AddLabel(showLabels, "Buy Formation Count: " + BuyFormationCount, color.white);
+AddLabel(showLabels, "Sell Formation Count: " + SellFormationCount, color.white);
+AddLabel(showLabels, "Buy Array Count: " + BuyArrayCount, color.white);
+AddLabel(showLabels, "Sell Array Count: " + SellArrayCount, color.white);
+
 
