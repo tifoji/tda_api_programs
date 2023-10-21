@@ -139,7 +139,7 @@ AddLabel(showLabels, "Buy Formation Count: " + BuyFormationCount, color.white);
 AddLabel(ShowLabels, "Sell Formation Count: " + SellFormationCount, color.white);
 AddLabel(showLabels, "Buy Array Count: " + BuyArrayCount, color.white);
 AddLabel(ShowLabels, "Sell Array Count: " + SellArrayCount, color.white);
-AddLabel(showLabels and BuyArrayCompletion+1, "Buy Signal End", color.pink);
-AddLabel(showLabels and SellArrayCompletion+1, "Sell Signal End", color.white);
+AddLabel(showLabels and BuyArrayCompletion, "Buy Signal End", color.pink);
+AddLabel(showLabels and SellArrayCompletion, "Sell Signal End", color.white);
 
 
