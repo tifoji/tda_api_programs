@@ -17,7 +17,7 @@ input userK = 0; # Empty input for manual ATM strike
 input useManualExpiration = yes;
 input manualExpirationDate = 231215; # Manual expiration date if set to yes
 input additionalDaysToPlot = 0 ;
-input showLabels = yes;
+input showLabels = no;
 input bubbleOffset = 10;
 
 ########################################################################################################################
@@ -81,7 +81,7 @@ script OIChange {
     input symbol = "";
     input suffix = "";
     input expirationDate = 0;
-    input optionType = {"P", default "P"};
+    input optionType = {"C", default "P"};
     input strike = 0;
     #input displaySession = yes;
 
@@ -140,16 +140,16 @@ def putOTMstrike25 = if OTMP >= 25 then AtmStrike - strike_price_interval * 25 e
 
 ###########################################################################################################################
 #########################################  ITM OI CHANGES  ################################################################
-def ITMPutOIChange1 = OIChange(symbol, suffix, expirationDate, "P", callITMstrike1).oic;
-def ITMPutOIChange2 = OIChange(symbol, suffix, expirationDate, "P", callITMstrike2).oic;
-def ITMPutOIChange3 = OIChange(symbol, suffix, expirationDate, "P", callITMstrike3).oic;
-def ITMPutOIChange4 = OIChange(symbol, suffix, expirationDate, "P", callITMstrike4).oic;
-def ITMPutOIChange5 = OIChange(symbol, suffix, expirationDate, "P", callITMstrike5).oic;
-def ITMPutOIChange6 = OIChange(symbol, suffix, expirationDate, "P", callITMstrike6).oic;
-def ITMPutOIChange7 = OIChange(symbol, suffix, expirationDate, "P", callITMstrike7).oic;
-def ITMPutOIChange8 = OIChange(symbol, suffix, expirationDate, "P", callITMstrike8).oic;
-def ITMPutOIChange9 = OIChange(symbol, suffix, expirationDate, "P", callITMstrike9).oic;
-def ITMPutOIChange10 = OIChange(symbol, suffix, expirationDate, "P", callITMstrike10).oic;
+def ITMPutOIChange1 = OIChange(symbol, suffix, expirationDate, "P", putITMstrike1).oic;
+def ITMPutOIChange2 = OIChange(symbol, suffix, expirationDate, "P", putITMstrike2).oic;
+def ITMPutOIChange3 = OIChange(symbol, suffix, expirationDate, "P", putITMstrike3).oic;
+def ITMPutOIChange4 = OIChange(symbol, suffix, expirationDate, "P", putITMstrike4).oic;
+def ITMPutOIChange5 = OIChange(symbol, suffix, expirationDate, "P", putITMstrike5).oic;
+def ITMPutOIChange6 = OIChange(symbol, suffix, expirationDate, "P", putITMstrike6).oic;
+def ITMPutOIChange7 = OIChange(symbol, suffix, expirationDate, "P", putITMstrike7).oic;
+def ITMPutOIChange8 = OIChange(symbol, suffix, expirationDate, "P", putITMstrike8).oic;
+def ITMPutOIChange9 = OIChange(symbol, suffix, expirationDate, "P", putITMstrike9).oic;
+def ITMPutOIChange10 = OIChange(symbol, suffix, expirationDate, "P", putITMstrike10).oic;
 
 # Finding the HIGHEST OI change
 def maxITMOIChange1 = Max(Max(Max(Max(Max(Max(Max(Max(Max(
@@ -161,17 +161,18 @@ def maxITMOIChange1 = Max(Max(Max(Max(Max(Max(Max(Max(Max(
 
 # Identifying which strike corresponds to maxOIChange1
 def strikeITMMax1 = 
-    if AbsValue(ITMPutOIChange1) == maxITMOIChange1 then callITMstrike1 
-    else if AbsValue(ITMPutOIChange2) == maxITMOIChange1 then callITMstrike2 
-    else if AbsValue(ITMPutOIChange3) == maxITMOIChange1 then callITMstrike3 
-    else if AbsValue(ITMPutOIChange4) == maxITMOIChange1 then callITMstrike4 
-    else if AbsValue(ITMPutOIChange5) == maxITMOIChange1 then callITMstrike5 
-    else if AbsValue(ITMPutOIChange6) == maxITMOIChange1 then callITMstrike6 
-    else if AbsValue(ITMPutOIChange7) == maxITMOIChange1 then callITMstrike7 
-    else if AbsValue(ITMPutOIChange8) == maxITMOIChange1 then callITMstrike8 
-    else if AbsValue(ITMPutOIChange9) == maxITMOIChange1 then callITMstrike9 
-    else if AbsValue(ITMPutOIChange10) == maxITMOIChange1 then callITMstrike10
-    else Double.NaN;
+    if AbsValue(ITMPutOIChange1) == maxITMOIChange1 then putITMstrike1 
+    else if AbsValue(ITMPutOIChange2) == maxITMOIChange1 then putITMstrike2 
+    else if AbsValue(ITMPutOIChange3) == maxITMOIChange1 then putITMstrike3 
+    else if AbsValue(ITMPutOIChange4) == maxITMOIChange1 then putITMstrike4 
+    else if AbsValue(ITMPutOIChange5) == maxITMOIChange1 then putITMstrike5 
+    else if AbsValue(ITMPutOIChange6) == maxITMOIChange1 then putITMstrike6 
+    else if AbsValue(ITMPutOIChange7) == maxITMOIChange1 then putITMstrike7 
+    else if AbsValue(ITMPutOIChange8) == maxITMOIChange1 then putITMstrike8 
+    else if AbsValue(ITMPutOIChange9) == maxITMOIChange1 then putITMstrike9 
+    #else if AbsValue(ITMPutOIChange10) == maxITMOIChange1 then putITMstrike10
+    #else Double.NaN;
+    else putITMstrike10;
 
 # Finding the SECOND HIGHEST OI change and its associated strike
 def maxITMOIChange2 = Max(Max(Max(Max(Max(Max(Max(Max(Max(
@@ -188,17 +189,17 @@ def maxITMOIChange2 = Max(Max(Max(Max(Max(Max(Max(Max(Max(
 
 # Identifying which strike corresponds to maxOIChange2
 def strikeITMMax2 = 
-    if AbsValue(ITMPutOIChange1) == maxITMOIChange2 then callITMstrike1 
-    else if AbsValue(ITMPutOIChange2) == maxITMOIChange2 then callITMstrike2 
-    else if AbsValue(ITMPutOIChange3) == maxITMOIChange2 then callITMstrike3 
-    else if AbsValue(ITMPutOIChange4) == maxITMOIChange2 then callITMstrike4 
-    else if AbsValue(ITMPutOIChange5) == maxITMOIChange2 then callITMstrike5 
-    else if AbsValue(ITMPutOIChange6) == maxITMOIChange2 then callITMstrike6 
-    else if AbsValue(ITMPutOIChange7) == maxITMOIChange2 then callITMstrike7 
-    else if AbsValue(ITMPutOIChange8) == maxITMOIChange2 then callITMstrike8 
-    else if AbsValue(ITMPutOIChange9) == maxITMOIChange2 then callITMstrike9 
-    else if AbsValue(ITMPutOIChange10) == maxITMOIChange2 then callITMstrike10
-    else Double.NaN;
+    if AbsValue(ITMPutOIChange1) == maxITMOIChange2 then putITMstrike1 
+    else if AbsValue(ITMPutOIChange2) == maxITMOIChange2 then putITMstrike2 
+    else if AbsValue(ITMPutOIChange3) == maxITMOIChange2 then putITMstrike3 
+    else if AbsValue(ITMPutOIChange4) == maxITMOIChange2 then putITMstrike4 
+    else if AbsValue(ITMPutOIChange5) == maxITMOIChange2 then putITMstrike5 
+    else if AbsValue(ITMPutOIChange6) == maxITMOIChange2 then putITMstrike6 
+    else if AbsValue(ITMPutOIChange7) == maxITMOIChange2 then putITMstrike7 
+    else if AbsValue(ITMPutOIChange8) == maxITMOIChange2 then putITMstrike8 
+    else if AbsValue(ITMPutOIChange9) == maxITMOIChange2 then putITMstrike9 
+    else if AbsValue(ITMPutOIChange10) == maxITMOIChange2 then putITMstrike10
+    else putITMstrike10;
 
 # Finding the THIRD HIGHEST OI change and its associated strike
 def maxITMOIChange3 = Max(Max(Max(Max(Max(Max(Max(Max(Max(
@@ -215,46 +216,46 @@ def maxITMOIChange3 = Max(Max(Max(Max(Max(Max(Max(Max(Max(
 
 # Identifying which strike corresponds to maxOIChange3
 def strikeITMMax3 = 
-    if AbsValue(ITMPutOIChange1) == maxITMOIChange3 then callITMstrike1 
-    else if AbsValue(ITMPutOIChange2) == maxITMOIChange3 then callITMstrike2 
-    else if AbsValue(ITMPutOIChange3) == maxITMOIChange3 then callITMstrike3 
-    else if AbsValue(ITMPutOIChange4) == maxITMOIChange3 then callITMstrike4 
-    else if AbsValue(ITMPutOIChange5) == maxITMOIChange3 then callITMstrike5 
-    else if AbsValue(ITMPutOIChange6) == maxITMOIChange3 then callITMstrike6 
-    else if AbsValue(ITMPutOIChange7) == maxITMOIChange3 then callITMstrike7 
-    else if AbsValue(ITMPutOIChange8) == maxITMOIChange3 then callITMstrike8 
-    else if AbsValue(ITMPutOIChange9) == maxITMOIChange3 then callITMstrike9 
-    else callITMstrike10;
+    if AbsValue(ITMPutOIChange1) == maxITMOIChange3 then putITMstrike1 
+    else if AbsValue(ITMPutOIChange2) == maxITMOIChange3 then putITMstrike2 
+    else if AbsValue(ITMPutOIChange3) == maxITMOIChange3 then putITMstrike3 
+    else if AbsValue(ITMPutOIChange4) == maxITMOIChange3 then putITMstrike4 
+    else if AbsValue(ITMPutOIChange5) == maxITMOIChange3 then putITMstrike5 
+    else if AbsValue(ITMPutOIChange6) == maxITMOIChange3 then putITMstrike6 
+    else if AbsValue(ITMPutOIChange7) == maxITMOIChange3 then putITMstrike7 
+    else if AbsValue(ITMPutOIChange8) == maxITMOIChange3 then putITMstrike8 
+    else if AbsValue(ITMPutOIChange9) == maxITMOIChange3 then putITMstrike9 
+    else putITMstrike10;
 
 ###########################################################################################################################
 #########################################  OTM OI CHANGES  ################################################################
 
 ###OTM OI CHANGES
-def OTMPutOIChange1 = OIChange(symbol, suffix, expirationDate, "P", callOTMstrike1).oic;
-def OTMPutOIChange2 = OIChange(symbol, suffix, expirationDate, "P", callOTMstrike2).oic;
-def OTMPutOIChange3 = OIChange(symbol, suffix, expirationDate, "P", callOTMstrike3).oic;
-def OTMPutOIChange4 = OIChange(symbol, suffix, expirationDate, "P", callOTMstrike4).oic;
-def OTMPutOIChange5 = OIChange(symbol, suffix, expirationDate, "P", callOTMstrike5).oic;
-def OTMPutOIChange6 = OIChange(symbol, suffix, expirationDate, "P", callOTMstrike6).oic;
-def OTMPutOIChange7 = OIChange(symbol, suffix, expirationDate, "P", callOTMstrike7).oic;
-def OTMPutOIChange8 = OIChange(symbol, suffix, expirationDate, "P", callOTMstrike8).oic;
-def OTMPutOIChange9 = OIChange(symbol, suffix, expirationDate, "P", callOTMstrike9).oic;
-def OTMPutOIChange10 = OIChange(symbol, suffix, expirationDate, "P", callOTMstrike10).oic;
-def OTMPutOIChange11 = OIChange(symbol, suffix, expirationDate, "P", callOTMstrike11).oic;
-def OTMPutOIChange12 = OIChange(symbol, suffix, expirationDate, "P", callOTMstrike12).oic;
-def OTMPutOIChange13 = OIChange(symbol, suffix, expirationDate, "P", callOTMstrike13).oic;
-def OTMPutOIChange14 = OIChange(symbol, suffix, expirationDate, "P", callOTMstrike14).oic;
-def OTMPutOIChange15 = OIChange(symbol, suffix, expirationDate, "P", callOTMstrike15).oic;
-def OTMPutOIChange16 = OIChange(symbol, suffix, expirationDate, "P", callOTMstrike16).oic;
-def OTMPutOIChange17 = OIChange(symbol, suffix, expirationDate, "P", callOTMstrike17).oic;
-def OTMPutOIChange18 = OIChange(symbol, suffix, expirationDate, "P", callOTMstrike18).oic;
-def OTMPutOIChange19 = OIChange(symbol, suffix, expirationDate, "P", callOTMstrike19).oic;
-def OTMPutOIChange20 = OIChange(symbol, suffix, expirationDate, "P", callOTMstrike20).oic;
-def OTMPutOIChange21 = OIChange(symbol, suffix, expirationDate, "P", callOTMstrike21).oic;
-def OTMPutOIChange22 = OIChange(symbol, suffix, expirationDate, "P", callOTMstrike22).oic;
-def OTMPutOIChange23 = OIChange(symbol, suffix, expirationDate, "P", callOTMstrike23).oic;
-def OTMPutOIChange24 = OIChange(symbol, suffix, expirationDate, "P", callOTMstrike24).oic;
-def OTMPutOIChange25 = OIChange(symbol, suffix, expirationDate, "P", callOTMstrike25).oic;
+def OTMPutOIChange1 = OIChange(symbol, suffix, expirationDate, "P", putOTMstrike1).oic;
+def OTMPutOIChange2 = OIChange(symbol, suffix, expirationDate, "P", putOTMstrike2).oic;
+def OTMPutOIChange3 = OIChange(symbol, suffix, expirationDate, "P", putOTMstrike3).oic;
+def OTMPutOIChange4 = OIChange(symbol, suffix, expirationDate, "P", putOTMstrike4).oic;
+def OTMPutOIChange5 = OIChange(symbol, suffix, expirationDate, "P", putOTMstrike5).oic;
+def OTMPutOIChange6 = OIChange(symbol, suffix, expirationDate, "P", putOTMstrike6).oic;
+def OTMPutOIChange7 = OIChange(symbol, suffix, expirationDate, "P", putOTMstrike7).oic;
+def OTMPutOIChange8 = OIChange(symbol, suffix, expirationDate, "P", putOTMstrike8).oic;
+def OTMPutOIChange9 = OIChange(symbol, suffix, expirationDate, "P", putOTMstrike9).oic;
+def OTMPutOIChange10 = OIChange(symbol, suffix, expirationDate, "P", putOTMstrike10).oic;
+def OTMPutOIChange11 = OIChange(symbol, suffix, expirationDate, "P", putOTMstrike11).oic;
+def OTMPutOIChange12 = OIChange(symbol, suffix, expirationDate, "P", putOTMstrike12).oic;
+def OTMPutOIChange13 = OIChange(symbol, suffix, expirationDate, "P", putOTMstrike13).oic;
+def OTMPutOIChange14 = OIChange(symbol, suffix, expirationDate, "P", putOTMstrike14).oic;
+def OTMPutOIChange15 = OIChange(symbol, suffix, expirationDate, "P", putOTMstrike15).oic;
+def OTMPutOIChange16 = OIChange(symbol, suffix, expirationDate, "P", putOTMstrike16).oic;
+def OTMPutOIChange17 = OIChange(symbol, suffix, expirationDate, "P", putOTMstrike17).oic;
+def OTMPutOIChange18 = OIChange(symbol, suffix, expirationDate, "P", putOTMstrike18).oic;
+def OTMPutOIChange19 = OIChange(symbol, suffix, expirationDate, "P", putOTMstrike19).oic;
+def OTMPutOIChange20 = OIChange(symbol, suffix, expirationDate, "P", putOTMstrike20).oic;
+def OTMPutOIChange21 = OIChange(symbol, suffix, expirationDate, "P", putOTMstrike21).oic;
+def OTMPutOIChange22 = OIChange(symbol, suffix, expirationDate, "P", putOTMstrike22).oic;
+def OTMPutOIChange23 = OIChange(symbol, suffix, expirationDate, "P", putOTMstrike23).oic;
+def OTMPutOIChange24 = OIChange(symbol, suffix, expirationDate, "P", putOTMstrike24).oic;
+def OTMPutOIChange25 = OIChange(symbol, suffix, expirationDate, "P", putOTMstrike25).oic;
 
 # Finding the HIGHEST OI change and its associated strike
 def maxOTMOIChange1 = Max(Max(Max(Max(Max(Max(Max(Max(Max(Max(Max(Max(Max(Max(Max(Max(Max(Max(Max(Max(Max(Max(Max(Max(
@@ -273,32 +274,33 @@ def maxOTMOIChange1 = Max(Max(Max(Max(Max(Max(Max(Max(Max(Max(Max(Max(Max(Max(Ma
     AbsValue(OTMPutOIChange25));
 
 # Identifying which strike corresponds to maxOTMOIChange1
-def strikeOTMMax1 = if AbsValue(OTMPutOIChange1) == maxOTMOIChange1 then callOTMstrike1 
-                 else if AbsValue(OTMPutOIChange2) == maxOTMOIChange1 then callOTMstrike2 
-                 else if AbsValue(OTMPutOIChange3) == maxOTMOIChange1 then callOTMstrike3 
-                 else if AbsValue(OTMPutOIChange4) == maxOTMOIChange1 then callOTMstrike4 
-                 else if AbsValue(OTMPutOIChange5) == maxOTMOIChange1 then callOTMstrike5 
-                 else if AbsValue(OTMPutOIChange6) == maxOTMOIChange1 then callOTMstrike6 
-                 else if AbsValue(OTMPutOIChange7) == maxOTMOIChange1 then callOTMstrike7 
-                 else if AbsValue(OTMPutOIChange8) == maxOTMOIChange1 then callOTMstrike8 
-                 else if AbsValue(OTMPutOIChange9) == maxOTMOIChange1 then callOTMstrike9
-                 else if AbsValue(OTMPutOIChange10) == maxOTMOIChange1 then callOTMstrike10
-                 else if AbsValue(OTMPutOIChange11) == maxOTMOIChange1 then callOTMstrike11
-                 else if AbsValue(OTMPutOIChange12) == maxOTMOIChange1 then callOTMstrike12
-                 else if AbsValue(OTMPutOIChange13) == maxOTMOIChange1 then callOTMstrike13
-                 else if AbsValue(OTMPutOIChange14) == maxOTMOIChange1 then callOTMstrike14
-                 else if AbsValue(OTMPutOIChange15) == maxOTMOIChange1 then callOTMstrike15
-                 else if AbsValue(OTMPutOIChange16) == maxOTMOIChange1 then callOTMstrike16
-                 else if AbsValue(OTMPutOIChange17) == maxOTMOIChange1 then callOTMstrike17
-                 else if AbsValue(OTMPutOIChange18) == maxOTMOIChange1 then callOTMstrike18
-                 else if AbsValue(OTMPutOIChange19) == maxOTMOIChange1 then callOTMstrike19
-                 else if AbsValue(OTMPutOIChange20) == maxOTMOIChange1 then callOTMstrike20
-                 else if AbsValue(OTMPutOIChange21) == maxOTMOIChange1 then callOTMstrike21
-                 else if AbsValue(OTMPutOIChange22) == maxOTMOIChange1 then callOTMstrike22
-                 else if AbsValue(OTMPutOIChange23) == maxOTMOIChange1 then callOTMstrike23
-                 else if AbsValue(OTMPutOIChange24) == maxOTMOIChange1 then callOTMstrike24
-                 else if AbsValue(OTMPutOIChange25) == maxOTMOIChange1 then callOTMstrike25
-                 else Double.NaN;
+def strikeOTMMax1 = if AbsValue(OTMPutOIChange1) == maxOTMOIChange1 then putOTMstrike1 
+                 else if AbsValue(OTMPutOIChange2) == maxOTMOIChange1 then putOTMstrike2 
+                 else if AbsValue(OTMPutOIChange3) == maxOTMOIChange1 then putOTMstrike3 
+                 else if AbsValue(OTMPutOIChange4) == maxOTMOIChange1 then putOTMstrike4 
+                 else if AbsValue(OTMPutOIChange5) == maxOTMOIChange1 then putOTMstrike5 
+                 else if AbsValue(OTMPutOIChange6) == maxOTMOIChange1 then putOTMstrike6 
+                 else if AbsValue(OTMPutOIChange7) == maxOTMOIChange1 then putOTMstrike7 
+                 else if AbsValue(OTMPutOIChange8) == maxOTMOIChange1 then putOTMstrike8 
+                 else if AbsValue(OTMPutOIChange9) == maxOTMOIChange1 then putOTMstrike9
+                 else if AbsValue(OTMPutOIChange10) == maxOTMOIChange1 then putOTMstrike10
+                 else if AbsValue(OTMPutOIChange11) == maxOTMOIChange1 then putOTMstrike11
+                 else if AbsValue(OTMPutOIChange12) == maxOTMOIChange1 then putOTMstrike12
+                 else if AbsValue(OTMPutOIChange13) == maxOTMOIChange1 then putOTMstrike13
+                 else if AbsValue(OTMPutOIChange14) == maxOTMOIChange1 then putOTMstrike14
+                 else if AbsValue(OTMPutOIChange15) == maxOTMOIChange1 then putOTMstrike15
+                 else if AbsValue(OTMPutOIChange16) == maxOTMOIChange1 then putOTMstrike16
+                 else if AbsValue(OTMPutOIChange17) == maxOTMOIChange1 then putOTMstrike17
+                 else if AbsValue(OTMPutOIChange18) == maxOTMOIChange1 then putOTMstrike18
+                 else if AbsValue(OTMPutOIChange19) == maxOTMOIChange1 then putOTMstrike19
+                 else if AbsValue(OTMPutOIChange20) == maxOTMOIChange1 then putOTMstrike20
+                 else if AbsValue(OTMPutOIChange21) == maxOTMOIChange1 then putOTMstrike21
+                 else if AbsValue(OTMPutOIChange22) == maxOTMOIChange1 then putOTMstrike22
+                 else if AbsValue(OTMPutOIChange23) == maxOTMOIChange1 then putOTMstrike23
+                 else if AbsValue(OTMPutOIChange24) == maxOTMOIChange1 then putOTMstrike24
+                 #else if AbsValue(OTMPutOIChange25) == maxOTMOIChange1 then putOTMstrike25
+                 #else Double.NaN;
+                 else putOTMstrike25;
 
 # Finding the SECOND HIGHEST OI change and its associated strike
 def maxOTMOIChange2 = Max(Max(Max(Max(Max(Max(Max(Max(Max(Max(Max(Max(Max(Max(Max(Max(Max(Max(Max(Max(Max(Max(Max(Max(
@@ -330,31 +332,31 @@ def maxOTMOIChange2 = Max(Max(Max(Max(Max(Max(Max(Max(Max(Max(Max(Max(Max(Max(Ma
 
 # Identifying which strike corresponds to maxOIChange2
 def strikeOTMMax2 = 
-    if AbsValue(OTMPutOIChange1) == maxOTMOIChange2 then callOTMstrike1
-    else if AbsValue(OTMPutOIChange2) == maxOTMOIChange2 then callOTMstrike2
-    else if AbsValue(OTMPutOIChange3) == maxOTMOIChange2 then callOTMstrike3
-    else if AbsValue(OTMPutOIChange4) == maxOTMOIChange2 then callOTMstrike4
-    else if AbsValue(OTMPutOIChange5) == maxOTMOIChange2 then callOTMstrike5
-    else if AbsValue(OTMPutOIChange6) == maxOTMOIChange2 then callOTMstrike6
-    else if AbsValue(OTMPutOIChange7) == maxOTMOIChange2 then callOTMstrike7
-    else if AbsValue(OTMPutOIChange8) == maxOTMOIChange2 then callOTMstrike8
-    else if AbsValue(OTMPutOIChange9) == maxOTMOIChange2 then callOTMstrike9
-    else if AbsValue(OTMPutOIChange10) == maxOTMOIChange2 then callOTMstrike10
-    else if AbsValue(OTMPutOIChange11) == maxOTMOIChange2 then callOTMstrike11
-    else if AbsValue(OTMPutOIChange12) == maxOTMOIChange2 then callOTMstrike12
-    else if AbsValue(OTMPutOIChange13) == maxOTMOIChange2 then callOTMstrike13
-    else if AbsValue(OTMPutOIChange14) == maxOTMOIChange2 then callOTMstrike14
-    else if AbsValue(OTMPutOIChange15) == maxOTMOIChange2 then callOTMstrike15
-    else if AbsValue(OTMPutOIChange16) == maxOTMOIChange2 then callOTMstrike16
-    else if AbsValue(OTMPutOIChange17) == maxOTMOIChange2 then callOTMstrike17
-    else if AbsValue(OTMPutOIChange18) == maxOTMOIChange2 then callOTMstrike18
-    else if AbsValue(OTMPutOIChange19) == maxOTMOIChange2 then callOTMstrike19
-    else if AbsValue(OTMPutOIChange20) == maxOTMOIChange2 then callOTMstrike20
-    else if AbsValue(OTMPutOIChange21) == maxOTMOIChange2 then callOTMstrike21
-    else if AbsValue(OTMPutOIChange22) == maxOTMOIChange2 then callOTMstrike22
-    else if AbsValue(OTMPutOIChange23) == maxOTMOIChange2 then callOTMstrike23
-    else if AbsValue(OTMPutOIChange24) == maxOTMOIChange2 then callOTMstrike24
-    else callOTMstrike25;
+    if AbsValue(OTMPutOIChange1) == maxOTMOIChange2 then putOTMstrike1
+    else if AbsValue(OTMPutOIChange2) == maxOTMOIChange2 then putOTMstrike2
+    else if AbsValue(OTMPutOIChange3) == maxOTMOIChange2 then putOTMstrike3
+    else if AbsValue(OTMPutOIChange4) == maxOTMOIChange2 then putOTMstrike4
+    else if AbsValue(OTMPutOIChange5) == maxOTMOIChange2 then putOTMstrike5
+    else if AbsValue(OTMPutOIChange6) == maxOTMOIChange2 then putOTMstrike6
+    else if AbsValue(OTMPutOIChange7) == maxOTMOIChange2 then putOTMstrike7
+    else if AbsValue(OTMPutOIChange8) == maxOTMOIChange2 then putOTMstrike8
+    else if AbsValue(OTMPutOIChange9) == maxOTMOIChange2 then putOTMstrike9
+    else if AbsValue(OTMPutOIChange10) == maxOTMOIChange2 then putOTMstrike10
+    else if AbsValue(OTMPutOIChange11) == maxOTMOIChange2 then putOTMstrike11
+    else if AbsValue(OTMPutOIChange12) == maxOTMOIChange2 then putOTMstrike12
+    else if AbsValue(OTMPutOIChange13) == maxOTMOIChange2 then putOTMstrike13
+    else if AbsValue(OTMPutOIChange14) == maxOTMOIChange2 then putOTMstrike14
+    else if AbsValue(OTMPutOIChange15) == maxOTMOIChange2 then putOTMstrike15
+    else if AbsValue(OTMPutOIChange16) == maxOTMOIChange2 then putOTMstrike16
+    else if AbsValue(OTMPutOIChange17) == maxOTMOIChange2 then putOTMstrike17
+    else if AbsValue(OTMPutOIChange18) == maxOTMOIChange2 then putOTMstrike18
+    else if AbsValue(OTMPutOIChange19) == maxOTMOIChange2 then putOTMstrike19
+    else if AbsValue(OTMPutOIChange20) == maxOTMOIChange2 then putOTMstrike20
+    else if AbsValue(OTMPutOIChange21) == maxOTMOIChange2 then putOTMstrike21
+    else if AbsValue(OTMPutOIChange22) == maxOTMOIChange2 then putOTMstrike22
+    else if AbsValue(OTMPutOIChange23) == maxOTMOIChange2 then putOTMstrike23
+    else if AbsValue(OTMPutOIChange24) == maxOTMOIChange2 then putOTMstrike24
+    else putOTMstrike25;
 
 # Finding the THIRD HIGHEST OI change and its associated strike
 def maxOTMOIChange3 = Max(Max(Max(Max(Max(Max(Max(Max(Max(Max(Max(Max(Max(Max(Max(Max(Max(Max(Max(Max(Max(Max(Max(Max(
@@ -386,31 +388,31 @@ if AbsValue(OTMPutOIChange1) != maxOTMOIChange1 and AbsValue(OTMPutOIChange1) !=
 
 # Identifying which strike corresponds to maxOIChange3
 def strikeOTMMax3 = 
-    if AbsValue(OTMPutOIChange1) == maxOTMOIChange3 then callOTMstrike1
-    else if AbsValue(OTMPutOIChange2) == maxOTMOIChange3 then callOTMstrike2
-    else if AbsValue(OTMPutOIChange3) == maxOTMOIChange3 then callOTMstrike3
-    else if AbsValue(OTMPutOIChange4) == maxOTMOIChange3 then callOTMstrike4
-    else if AbsValue(OTMPutOIChange5) == maxOTMOIChange3 then callOTMstrike5
-    else if AbsValue(OTMPutOIChange6) == maxOTMOIChange3 then callOTMstrike6
-    else if AbsValue(OTMPutOIChange7) == maxOTMOIChange3 then callOTMstrike7
-    else if AbsValue(OTMPutOIChange8) == maxOTMOIChange3 then callOTMstrike8
-    else if AbsValue(OTMPutOIChange9) == maxOTMOIChange3 then callOTMstrike9
-    else if AbsValue(OTMPutOIChange10) == maxOTMOIChange3 then callOTMstrike10
-    else if AbsValue(OTMPutOIChange11) == maxOTMOIChange3 then callOTMstrike11
-    else if AbsValue(OTMPutOIChange12) == maxOTMOIChange3 then callOTMstrike12
-    else if AbsValue(OTMPutOIChange13) == maxOTMOIChange3 then callOTMstrike13
-    else if AbsValue(OTMPutOIChange14) == maxOTMOIChange3 then callOTMstrike14
-    else if AbsValue(OTMPutOIChange15) == maxOTMOIChange3 then callOTMstrike15
-    else if AbsValue(OTMPutOIChange16) == maxOTMOIChange3 then callOTMstrike16
-    else if AbsValue(OTMPutOIChange17) == maxOTMOIChange3 then callOTMstrike17
-    else if AbsValue(OTMPutOIChange18) == maxOTMOIChange3 then callOTMstrike18
-    else if AbsValue(OTMPutOIChange19) == maxOTMOIChange3 then callOTMstrike19
-    else if AbsValue(OTMPutOIChange20) == maxOTMOIChange3 then callOTMstrike20
-    else if AbsValue(OTMPutOIChange21) == maxOTMOIChange3 then callOTMstrike21
-    else if AbsValue(OTMPutOIChange22) == maxOTMOIChange3 then callOTMstrike22
-    else if AbsValue(OTMPutOIChange23) == maxOTMOIChange3 then callOTMstrike23
-    else if AbsValue(OTMPutOIChange24) == maxOTMOIChange3 then callOTMstrike24
-    else callOTMstrike25;
+    if AbsValue(OTMPutOIChange1) == maxOTMOIChange3 then putOTMstrike1
+    else if AbsValue(OTMPutOIChange2) == maxOTMOIChange3 then putOTMstrike2
+    else if AbsValue(OTMPutOIChange3) == maxOTMOIChange3 then putOTMstrike3
+    else if AbsValue(OTMPutOIChange4) == maxOTMOIChange3 then putOTMstrike4
+    else if AbsValue(OTMPutOIChange5) == maxOTMOIChange3 then putOTMstrike5
+    else if AbsValue(OTMPutOIChange6) == maxOTMOIChange3 then putOTMstrike6
+    else if AbsValue(OTMPutOIChange7) == maxOTMOIChange3 then putOTMstrike7
+    else if AbsValue(OTMPutOIChange8) == maxOTMOIChange3 then putOTMstrike8
+    else if AbsValue(OTMPutOIChange9) == maxOTMOIChange3 then putOTMstrike9
+    else if AbsValue(OTMPutOIChange10) == maxOTMOIChange3 then putOTMstrike10
+    else if AbsValue(OTMPutOIChange11) == maxOTMOIChange3 then putOTMstrike11
+    else if AbsValue(OTMPutOIChange12) == maxOTMOIChange3 then putOTMstrike12
+    else if AbsValue(OTMPutOIChange13) == maxOTMOIChange3 then putOTMstrike13
+    else if AbsValue(OTMPutOIChange14) == maxOTMOIChange3 then putOTMstrike14
+    else if AbsValue(OTMPutOIChange15) == maxOTMOIChange3 then putOTMstrike15
+    else if AbsValue(OTMPutOIChange16) == maxOTMOIChange3 then putOTMstrike16
+    else if AbsValue(OTMPutOIChange17) == maxOTMOIChange3 then putOTMstrike17
+    else if AbsValue(OTMPutOIChange18) == maxOTMOIChange3 then putOTMstrike18
+    else if AbsValue(OTMPutOIChange19) == maxOTMOIChange3 then putOTMstrike19
+    else if AbsValue(OTMPutOIChange20) == maxOTMOIChange3 then putOTMstrike20
+    else if AbsValue(OTMPutOIChange21) == maxOTMOIChange3 then putOTMstrike21
+    else if AbsValue(OTMPutOIChange22) == maxOTMOIChange3 then putOTMstrike22
+    else if AbsValue(OTMPutOIChange23) == maxOTMOIChange3 then putOTMstrike23
+    else if AbsValue(OTMPutOIChange24) == maxOTMOIChange3 then putOTMstrike24
+    else putOTMstrike25;
 
 ###########################################################################################################################
 #########################################  PLOTS  #########################################################################
@@ -486,17 +488,17 @@ def lastbar = HighestAll(if !IsNaN(close) then BarNumber() else Double.NaN);
 def shift_line_right = bubbleOffset; # Adjust this value to control the distance into the expansion area
 
 # ITM Top 3 Bubbles
-AddChartBubble(BarNumber() == lastbar + shift_line_right, strikeITMMax1, AsPrice(strikeITMMax1) + "C:" + AsPrice(realOIChangeITMMax1), if realOIChangeITMMax1 > 0 then Color.LIGHT_GREEN else Color.PINK, yes);
-AddChartBubble(BarNumber() == lastbar + shift_line_right+5, strikeITMMax2, AsPrice(strikeITMMax2) + "C:" + AsPrice(realOIChangeITMMax2), if realOIChangeITMMax2 > 0 then Color.LIGHT_GREEN else Color.PINK, yes);
-AddChartBubble(BarNumber() == lastbar + shift_line_right+10, strikeITMMax3, AsPrice(strikeITMMax3) + "C:" + AsPrice(realOIChangeITMMax3), if realOIChangeITMMax3 > 0 then Color.LIGHT_GREEN else Color.PINK, yes);
+AddChartBubble(BarNumber() == lastbar + shift_line_right + 20, strikeITMMax1, AsPrice(strikeITMMax1) + "P:" + AsPrice(realOIChangeITMMax1), if realOIChangeITMMax1 > 0 then Color.LIGHT_GREEN else Color.PINK, yes);
+AddChartBubble(BarNumber() == lastbar + shift_line_right+20, strikeITMMax2, AsPrice(strikeITMMax2) + "P:" + AsPrice(realOIChangeITMMax2), if realOIChangeITMMax2 > 0 then Color.LIGHT_GREEN else Color.PINK, yes);
+AddChartBubble(BarNumber() == lastbar + shift_line_right+20, strikeITMMax3, AsPrice(strikeITMMax3) + "P:" + AsPrice(realOIChangeITMMax3), if realOIChangeITMMax3 > 0 then Color.LIGHT_GREEN else Color.PINK, yes);
 
 # ATM Change Bubble
-AddChartBubble(BarNumber() == lastbar + shift_line_right + 10, openATM, AsPrice(openATM) + "C:" + AsPrice(realOIChangeATM), if realOIChangeATM > 0 then Color.LIGHT_GREEN else Color.PINK, yes);
+AddChartBubble(BarNumber() == lastbar + shift_line_right + 10, openATM, AsPrice(openATM) + "P:" + AsPrice(realOIChangeATM), if realOIChangeATM > 0 then Color.LIGHT_GREEN else Color.PINK, yes);
 
 # OTM Top 3 Bubbles
-AddChartBubble(BarNumber() == lastbar + shift_line_right, strikeOTMMax1, AsPrice(strikeOTMMax1) + "C:" + AsPrice(realOIChangeOTMMax1), if realOIChangeOTMMax1 > 0 then Color.LIGHT_GREEN else Color.PINK, yes);
-AddChartBubble(BarNumber() == lastbar + shift_line_right + 5, strikeOTMMax2, AsPrice(strikeOTMMax2) + "C:" + AsPrice(realOIChangeOTMMax2), if realOIChangeOTMMax2 > 0 then Color.LIGHT_GREEN else Color.PINK, yes);
-AddChartBubble(BarNumber() == lastbar + shift_line_right + 10, strikeOTMMax3, AsPrice(strikeOTMMax3) + "C:" + AsPrice(realOIChangeOTMMax3), if realOIChangeOTMMax3 > 0 then Color.LIGHT_GREEN else Color.PINK, yes);
+AddChartBubble(BarNumber() == lastbar + shift_line_right + 20, strikeOTMMax1, AsPrice(strikeOTMMax1) + "P:" + AsPrice(realOIChangeOTMMax1), if realOIChangeOTMMax1 > 0 then Color.LIGHT_GREEN else Color.PINK, yes);
+AddChartBubble(BarNumber() == lastbar + shift_line_right + 20, strikeOTMMax2, AsPrice(strikeOTMMax2) + "P:" + AsPrice(realOIChangeOTMMax2), if realOIChangeOTMMax2 > 0 then Color.LIGHT_GREEN else Color.PINK, yes);
+AddChartBubble(BarNumber() == lastbar + shift_line_right + 20, strikeOTMMax3, AsPrice(strikeOTMMax3) + "P:" + AsPrice(realOIChangeOTMMax3), if realOIChangeOTMMax3 > 0 then Color.LIGHT_GREEN else Color.PINK, yes);
 
 ###########################################################################################################################
 
